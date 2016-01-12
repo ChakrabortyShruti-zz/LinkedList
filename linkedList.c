@@ -19,3 +19,27 @@ void test_add_to_list(){
   add_to_list(&list,&number);
   assert(2 == list.length);
 }
+
+void test_get_first_element(){
+  LinkedList list = createList();
+  int element = 12;
+  add_to_list(&list,&element);
+  int element1 = 13;
+  add_to_list(&list,&element1);
+  int element2 = 14;
+  add_to_list(&list,&element2);
+  int *value = get_first_element(list);
+  assert(12 == *value);
+}
+
+void test_get_last_element(){
+  LinkedList list = createList();
+  int element = 12;
+  add_to_list(&list,&element);
+  int element1 = 13;
+  add_to_list(&list,&element1);
+  int element2 = 14;
+  add_to_list(&list,&element2);
+  int *value = get_last_element(list);
+  assert(14 == *value);
+}

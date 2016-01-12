@@ -24,3 +24,11 @@ int add_to_list(LinkedList* list,void* number){
   list->length++;
   return list->length;
 }
+
+void *get_first_element(LinkedList list){
+  return list.head->value;
+}
+
+void *get_last_element(LinkedList list){
+  return list.tail->value;
+}
