@@ -32,3 +32,15 @@ void *get_first_element(LinkedList list){
 void *get_last_element(LinkedList list){
   return list.tail->value;
 }
+
+void incrementor(void *element){
+  *(int *)element+=1;
+}
+
+void forEach(LinkedList list,ElementProcessor func){
+  Element *e = list.head;
+  while(e!=NULL){
+    func(e->value);
+    e = e->next;
+  }
+}

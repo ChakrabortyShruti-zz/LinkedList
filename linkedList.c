@@ -43,3 +43,14 @@ void test_get_last_element(){
   int *value = get_last_element(list);
   assert(14 == *value);
 }
+
+void test_forEach(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2  = 14;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  forEach(list,&incrementor);
+  assert((*(int *)list.head->value) == 13);
+  assert((*(int *)list.tail->value) == 15);
+}
