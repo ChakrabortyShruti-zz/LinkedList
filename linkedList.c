@@ -54,3 +54,39 @@ void test_forEach(){
   assert((*(int *)list.head->value) == 13);
   assert((*(int *)list.tail->value) == 15);
 }
+
+void test_getElementAt(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  Element result = *((Element *)getElementAt(list,2));
+  assert(*(int *)result.value == 14);
+}
+
+void test_indexOf(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(0 == indexOf(list,&element));
+  assert(3 == indexOf(list,&element3));
+}
+
+void test_deleteElementAt(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  int deletedValue = *((int *)deleteElementAt(&list,2));
+  assert(14 == deletedValue);
+  assert(3 == list.length);
+}
+

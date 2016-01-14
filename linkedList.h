@@ -7,6 +7,7 @@ typedef struct {
 typedef struct element{
   void *value;
   struct element *next;
+  struct element *prev;
 } Element;
 
 typedef void (*ElementProcessor)(void *);
@@ -22,3 +23,9 @@ void *get_last_element(LinkedList);
 void incrementor(void *);
 
 void forEach(LinkedList,ElementProcessor);
+
+void *getElementAt(LinkedList,int);
+
+int indexOf(LinkedList,void*);
+
+void *deleteElementAt(LinkedList*,int);
