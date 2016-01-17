@@ -89,3 +89,31 @@ void *deleteElementAt(LinkedList *list,int index){
   }
   return lastElement->value;
 }
+
+int asArray(LinkedList list,void **array,int maxElement){
+  Element *e = list.head;
+  int length = list.length < maxElement ? list.length : maxElement;
+  int count = 0;
+  while(e!=NULL && count != length){
+    array[count] = e->value;
+    count++;
+    e = e->next;
+  }
+  return length;
+}
+
+int isDivisible(void *hint,void* item){
+  return *(int *)item % *(int *)hint == 0;
+}
+
+LinkedList filter(LinkedList list, MatchFunc *func, void *hint){
+  Element *e = list.head;
+  LinkedList newList = createList();
+  while(e != NULL){
+    if(func(hint,e->value)){
+      add_to_list(&newList, &(e->value));
+    }
+    e = e->next;
+  }
+  return newList;
+}

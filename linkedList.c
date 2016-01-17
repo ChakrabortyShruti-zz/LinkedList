@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include "linkedList.h"
 
@@ -90,3 +91,36 @@ void test_deleteElementAt(){
   assert(3 == list.length);
 }
 
+void test_asArray(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  int maxLength = 4;
+  void *array = calloc(4,sizeof(int));
+  assert(4 == asArray(list,array,maxLength));
+  for(int i=0; i<maxLength;i++){
+    assert((**(int **)array+i) == *(int *)list.head->value);
+    list.head = list.head->next;
+  }
+}
+
+void test_filter(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  int hint=3;
+  LinkedList filteredElements = filter(list,isDivisible,&hint);
+  assert(filteredElements.length == 2);
+  for (int i = 0; i < filteredElements.length; i++){
+    printf("%d\n",**(int **)(filteredElements.head->value));
+    filteredElements.head = filteredElements.head -> next;
+  }
+}
