@@ -124,3 +124,22 @@ void test_filter(){
     filteredElements.head = filteredElements.head -> next;
   }
 }
+
+void test_map(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  int hint = 1;
+  LinkedList mappedElements = map(list,addOne,&hint);
+  assert(mappedElements.length == 4);
+  assert((*(int *)mappedElements.head->value) == 13);
+  assert((*(int *)mappedElements.tail->value) == 16);
+  for(int i=0; i<mappedElements.length;i++){
+    printf("%d\n",(*(int *)mappedElements.head->value));
+    mappedElements.head = mappedElements.head->next;
+  }
+}

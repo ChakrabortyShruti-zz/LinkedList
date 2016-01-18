@@ -117,3 +117,19 @@ LinkedList filter(LinkedList list, MatchFunc *func, void *hint){
   }
   return newList;
 }
+
+void addOne(void* hint,void* sourceItem, void* destinationItem){
+  *(int *)destinationItem = *((int *)sourceItem) + *((int *)hint);
+}
+
+LinkedList map(LinkedList list, ConvertFunc *convert, void* hint){
+  Element *e = list.head;
+  LinkedList mappedList = createList();
+  while(e != NULL){
+    void *newEle = malloc(sizeof(void));
+    convert(hint,e->value,newEle);
+    add_to_list(&mappedList,newEle);
+    e = e->next;
+  }
+  return mappedList; 
+}
