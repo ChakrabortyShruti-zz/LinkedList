@@ -108,6 +108,10 @@ void test_asArray(){
   }
 }
 
+int isDivisible(void *hint,void* item){
+  return *(int *)item % *(int *)hint == 0;
+}
+
 void test_filter(){
   LinkedList list = createList();
   int element = 12,element1 = 13,element2 = 14,element3 = 15;
@@ -123,6 +127,10 @@ void test_filter(){
     printf("%d\n",**(int **)(filteredElements.head->value));
     filteredElements.head = filteredElements.head -> next;
   }
+}
+
+void addOne(void* hint,void* sourceItem, void* destinationItem){
+  *(int *)destinationItem = *((int *)sourceItem) + *((int *)hint);
 }
 
 void test_map(){
@@ -143,3 +151,37 @@ void test_map(){
     mappedElements.head = mappedElements.head->next;
   }
 }
+
+void* sumIt(void *hint, void *prevItem, void *item){
+  *(int *)item = *(int *)prevItem + *(int *)item;
+  return (int *)item;
+}
+
+void test_reduce(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  int hint = 0;
+  int initialValue = 1;
+  int *result = (int *)reduce(list,sumIt,&hint,&initialValue);
+  assert(55 == *result);
+}
+
+ void test_reverse(){
+  LinkedList list = createList();
+  int element = 12,element1 = 13,element2 = 14,element3 = 15;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  LinkedList reverseList = reverse(list);
+  assert(4 == reverseList.length);
+  assert(15 == *(int *)reverseList.head->value);
+  assert(12 == *(int *)reverseList.tail->value);
+}
+

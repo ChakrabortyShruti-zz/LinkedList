@@ -102,10 +102,6 @@ int asArray(LinkedList list,void **array,int maxElement){
   return length;
 }
 
-int isDivisible(void *hint,void* item){
-  return *(int *)item % *(int *)hint == 0;
-}
-
 LinkedList filter(LinkedList list, MatchFunc *func, void *hint){
   Element *e = list.head;
   LinkedList newList = createList();
@@ -118,10 +114,6 @@ LinkedList filter(LinkedList list, MatchFunc *func, void *hint){
   return newList;
 }
 
-void addOne(void* hint,void* sourceItem, void* destinationItem){
-  *(int *)destinationItem = *((int *)sourceItem) + *((int *)hint);
-}
-
 LinkedList map(LinkedList list, ConvertFunc *convert, void* hint){
   Element *e = list.head;
   LinkedList mappedList = createList();
@@ -132,4 +124,23 @@ LinkedList map(LinkedList list, ConvertFunc *convert, void* hint){
     e = e->next;
   }
   return mappedList; 
+}
+
+void *reduce(LinkedList list, Reducer reduceFunc, void *hint, void *initialValue){
+  Element *e = list.head;
+  while(e != NULL){
+    initialValue = reduceFunc(hint,initialValue,(e->value));
+    e = e->next;
+  }
+  return initialValue;
+}
+
+LinkedList reverse(LinkedList list){
+  Element *e = list.tail;
+  LinkedList reverseList = createList();
+  while(e != NULL){
+    add_to_list(&reverseList, e->value);
+    e = e->prev;
+  }
+  return reverseList;
 }

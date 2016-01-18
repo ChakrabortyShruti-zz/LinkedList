@@ -14,7 +14,9 @@ typedef void (*ElementProcessor)(void*);
 
 typedef int MatchFunc(void*, void*);
 
-typedef void ConvertFunc(void*,void*, void*);
+typedef void ConvertFunc(void*, void*, void*);
+
+typedef void* Reducer(void*, void*, void*);
 
 LinkedList createList(void);
 
@@ -36,10 +38,10 @@ void *deleteElementAt(LinkedList*,int);
 
 int asArray(LinkedList,void**,int maxElement);
 
-int isDivisible(void*, void*);
-
 LinkedList filter(LinkedList, MatchFunc, void*);
 
-void addOne(void*, void*, void*);
-
 LinkedList map(LinkedList, ConvertFunc, void*);
+
+void *reduce(LinkedList, Reducer, void *hint, void *initialValue);
+
+LinkedList reverse(LinkedList);
