@@ -123,10 +123,8 @@ void test_filter(){
   int hint=3;
   LinkedList filteredElements = filter(list,isDivisible,&hint);
   assert(filteredElements.length == 2);
-  for (int i = 0; i < filteredElements.length; i++){
-    printf("%d\n",**(int **)(filteredElements.head->value));
-    filteredElements.head = filteredElements.head -> next;
-  }
+  assert(**(int **)filteredElements.head->value == 12);
+  assert(**(int **)filteredElements.tail->value == 15);
 }
 
 void addOne(void* hint,void* sourceItem, void* destinationItem){
@@ -171,7 +169,26 @@ void test_reduce(){
   assert(55 == *result);
 }
 
- void test_reverse(){
+void* sum_of_floatingNo(void *hint, void *prevItem, void *item){
+  *(double *)item = *(double *)prevItem + *(double *)item;
+  return (double *)item;
+}
+
+void test_reduce_for_double(){
+  LinkedList list = createList();
+  double element = 12.12,element1 = 13.76,element2 = 14.23,element3 = 15.05;
+  add_to_list(&list,&element);
+  add_to_list(&list,&element1);
+  add_to_list(&list,&element2);
+  add_to_list(&list,&element3);
+  assert(4 == list.length);
+  double hint = 0;
+  double initialValue = 1.0;
+  double *result = (double *)reduce(list,sum_of_floatingNo,&hint,&initialValue);
+  assert(56.16 == *result);
+}
+
+void test_reverse(){
   LinkedList list = createList();
   int element = 12,element1 = 13,element2 = 14,element3 = 15;
   add_to_list(&list,&element);
@@ -185,3 +202,45 @@ void test_reduce(){
   assert(12 == *(int *)reverseList.tail->value);
 }
 
+void test_reverse_of_char(){
+  LinkedList list = createList();
+  char ele = 'A',ele1 = 'B',ele2 = 'C',ele3 = 'D';
+  add_to_list(&list,&ele);
+  add_to_list(&list,&ele1);
+  add_to_list(&list,&ele2);
+  add_to_list(&list,&ele3);
+  assert(4 == list.length);
+  LinkedList reverseList = reverse(list);
+  assert(4 == reverseList.length);
+  assert('D' == *(char *)reverseList.head->value);
+  assert('A' == *(char *)reverseList.tail->value);
+}
+
+void test_reverse_for_string(){
+  LinkedList list = createList();
+  char *ele = "abc",*ele1 = "def",*ele2 = "ghi",*ele3 = "jkl";
+  add_to_list(&list,&ele);
+  add_to_list(&list,&ele1);
+  add_to_list(&list,&ele2);
+  add_to_list(&list,&ele3);
+  assert(4 == list.length);
+  LinkedList reverseList = reverse(list);
+  assert(4 == reverseList.length);
+  assert("jkl" == *(char **)reverseList.head->value);
+  assert("abc" == *(char **)reverseList.tail->value);
+}
+
+void test_reverse_for_floating_point_numbers(){
+  LinkedList list = createList();
+  double ele = 2.2,ele1 = 2.4,ele2 = 3.5,ele3 = 6.7,ele4 = 9.8;
+  add_to_list(&list,&ele);
+  add_to_list(&list,&ele1);
+  add_to_list(&list,&ele2);
+  add_to_list(&list,&ele3);
+  add_to_list(&list,&ele4);
+  assert(5 == list.length);
+  LinkedList reverseList = reverse(list);
+  assert(5 == reverseList.length);
+  assert(*(double *)reverseList.head->value == 9.8);
+  assert(*(double *)reverseList.tail->value == 2.2);
+}
